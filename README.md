@@ -48,19 +48,6 @@ That's it. No complicated setups, just configure → connect → run.
 
 ---
 
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4886914834712123"
-     crossorigin="anonymous"></script>
-<!-- In-article Ad -->
-<ins class="adsbygoogle"
-     style="display:block; text-align:center;"
-     data-ad-layout="in-article"
-     data-ad-format="fluid"
-     data-ad-client="ca-pub-4886914834712123"
-     data-ad-slot="9694145897"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-
 ## Core Feature Highlights
 
 ### POST Request & Body Settings
@@ -150,18 +137,3 @@ It's not that Postman is a bad tool. It's just that for scenarios where you are 
 You can try it out immediately without signing up or installing (web version). It only takes 3 minutes to create your first flow.
 
 Since it's a personal side project, it might have some shortcomings, but feedback is always welcome.
-
-<br>
-
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4886914834712123"
-     crossorigin="anonymous"></script>
-<!-- Horizontal Display Ad -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-4886914834712123"
-     data-ad-slot="7813395773"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
