@@ -1,26 +1,3 @@
----
-title: "Introducing DecoyDuck: An Automation Tool for Those Tired of Repetitive API Testing"
-slug: ""      # Leave as is
-date: 2026-05-02T00:10:18+09:00   # Date
-draft: false   # Publish status
-description: "A tool that allows you to visually configure flows by connecting API tests with nodes. It supports REST API as well as WebSocket connection tests, and you can automate repetitive tasks like token passing through a variable system. Available as a web and Windows app."
-summary: "A tool that allows you to visually configure flows by connecting API tests with nodes. It supports REST API as well as WebSocket connection tests, and you can automate repetitive tasks like token passing through a variable system. Available as a web and Windows app."
-showComments: false # Show comments
-showBreadcrumbs: true # Whether to show the draft indicator next to the post when building the site with the `--buildDrafts` option.
-
-#################### Tag/Series Settings ################
-tags: ["No-code", "API Test Automation", "Visual Workflow", "DecoyDuck", "Developer Tools", "Backend Development", "REST API", "WebSocket Test", "Variable System", "Project Template", "Productivity", "Dev Tools"]  
-series: []
-####################################################
-
-#################### Thumbnail Settings ####################
-featureImage: ""
-featureImageAlt: ""
-####################################################
----
-
-
-
 When doing backend development, there's often a routine like this:
 
 Call the Sign-up API → Log in and copy the token → Paste it into the header → Create content → Read → Update → Delete
