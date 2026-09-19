@@ -1,0 +1,20 @@
+{
+  "name": "decoyduck",
+  "interface": {
+    "displayName": "DecoyDuck"
+  },
+  "plugins": [
+    {
+      "name": "decoyduck",
+      "source": {
+        "source": "local",
+        "path": "./plugins/decoyduck"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

@@ -4,13 +4,13 @@
     "name": "studio-rainshelter"
   },
   "metadata": {
-    "description": "Claude Code plugin for the DecoyDuck desktop app."
+    "description": "Claude Code and Codex plugin for the DecoyDuck desktop app."
   },
   "plugins": [
     {
       "name": "decoyduck",
       "source": "./plugins/decoyduck",
-      "description": "Connect Claude Code to the DecoyDuck desktop app's MCP server and build, run, and debug test flows."
+      "description": "Connect Claude Code or Codex to the DecoyDuck desktop app's MCP server and build, run, and debug test flows."
     }
   ]
 }

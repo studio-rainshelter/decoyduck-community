@@ -2,7 +2,7 @@
   "mcpServers": {
     "decoyduck": {
       "type": "http",
-      "url": "http://127.0.0.1:${DECOYDUCK_MCP_PORT:-7275}/mcp"
+      "url": "http://127.0.0.1:7275/mcp"
     }
   }
 }

@@ -14,7 +14,7 @@ For questions about how DecoyDuck works, answer from the references; this needs 
 ## Prerequisites
 
 - The DecoyDuck desktop app is running and its MCP server is on (toolbar **mcp** button → toggle). The browser build has no MCP server.
-- The server listens on `http://127.0.0.1:7275/mcp`. If the user changed the port in the app, set the `DECOYDUCK_MCP_PORT` environment variable to the same port and restart Claude Code.
+- The plugin connects to `http://127.0.0.1:7275/mcp`, the app's default port. If the user changed the port in the app, they either set it back to 7275 or register the server themselves with the new port (Claude Code: `claude mcp add --transport http decoyduck http://127.0.0.1:<port>/mcp`; Codex: `codex mcp add decoyduck --url http://127.0.0.1:<port>/mcp`).
 - On WSL2, the client reaches the Windows-hosted server only with `networkingMode=mirrored` in `%USERPROFILE%\.wslconfig` (then `wsl --shutdown`).
 - If the `decoyduck` tools are missing or time out, report which of the above is the likely cause instead of retrying.
 
