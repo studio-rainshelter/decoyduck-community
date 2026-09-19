@@ -1,0 +1,16 @@
+{
+  "name": "decoyduck",
+  "owner": {
+    "name": "studio-rainshelter"
+  },
+  "metadata": {
+    "description": "Claude Code plugin for the DecoyDuck desktop app."
+  },
+  "plugins": [
+    {
+      "name": "decoyduck",
+      "source": "./plugins/decoyduck",
+      "description": "Connect Claude Code to the DecoyDuck desktop app's MCP server and build, run, and debug test flows."
+    }
+  ]
+}

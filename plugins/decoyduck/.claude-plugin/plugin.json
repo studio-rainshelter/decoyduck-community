@@ -1,0 +1,8 @@
+{
+  "name": "decoyduck",
+  "version": "1.0.0",
+  "description": "Connects to the DecoyDuck desktop app's local MCP server and adds a skill for building, running, and debugging DecoyDuck flows.",
+  "author": {
+    "name": "studio-rainshelter"
+  }
+}
