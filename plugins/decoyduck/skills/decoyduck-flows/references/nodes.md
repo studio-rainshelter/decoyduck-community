@@ -2,7 +2,7 @@
 
 `describe_schema` gives the default field shape of each node type. This file explains what the fields mean.
 
-Common fields on every node: `label` (unique per canvas, used for `${Label.prop}` references and edge lookups), `disabled`, `outputVariable` (variable name that receives the node's result data, on success and on failure).
+Common fields on every node: `label` (unique per canvas, used for `${Label.prop}` references and edge lookups), `disabled`, `outputVariable` (the **id** of an existing variable — not its name — that receives the node's result data on success and on failure; get the id from `set_variables` or `list_variables`).
 
 Handles: `input` receives edges. Outgoing handles are `output` (single path), or `success` / `failure` (branching). Omitting `handleType` in `connect_nodes` picks `output`, or `success` for branching nodes.
 
@@ -15,9 +15,9 @@ Handles: `output`.
 |---|---|
 | `flowId` | Unique flow id. `run_flow`, `get_execution`, and other nodes refer to the flow by this id. |
 | `tags` | String array for grouping. |
-| `preFlowId` | flowId to run before this flow, or `null`. If it fails, this flow does not run. |
+| `preFlowId` | flowId to run before this flow, or `null`. This flow is skipped only when the pre-flow ends `failed` or `cancelled`; a failed request inside it that just stops the pre-flow still counts as `completed`. |
 
-A disabled start node completes the whole flow immediately.
+A flow whose start node is disabled does not run and leaves no execution record; `run_flow` lists it under `skipped`. As a pre/post flow or a `flowExecutor` target it counts as completed, so the calling flow continues.
 
 ## end — flow exit point
 Handles: `input`.
