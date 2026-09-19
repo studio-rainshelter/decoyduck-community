@@ -28,6 +28,7 @@ This repository is the DecoyDuck community space: report bugs, request features,
 - [Features](#features)
 - [Advanced Usage](#advanced-usage)
 - [Use with Claude Code or Codex](#use-with-claude-code-or-codex)
+  - [Skills](#skills)
 - [How is it different from Postman?](#how-is-it-different-from-postman)
 - [Feedback](#feedback)
 
@@ -149,13 +150,7 @@ codex plugin marketplace add studio-rainshelter/decoyduck-community
 codex plugin add decoyduck@decoyduck
 ```
 
-**3. Ask in plain language** — the plugin adds these skills:
-
-| Skill | What it does |
-|---|---|
-| `decoyduck-flows` | Create, edit, run, and debug flows, canvases, nodes, and variables. Also answers questions about how DecoyDuck works. |
-| `decoyduck-import-api` | Turns an OpenAPI/Swagger spec, Postman collection (v2.x), curl commands, or a HAR file into runnable flows. |
-| `decoyduck-scenarios` | Builds common patterns: login then authenticated calls, repeat N times, poll until done, WebSocket checks, shared setup flows. |
+**3. Ask in plain language** — the assistant picks the right skill from your request. See [Skills](#skills) below.
 
 <details>
 <summary><b>Using a different port or WSL2</b></summary>
@@ -171,6 +166,79 @@ codex mcp add decoyduck --url http://127.0.0.1:<port>/mcp
 
 On WSL2, the client can reach the app running on Windows only with `networkingMode=mirrored` in `%USERPROFILE%\.wslconfig`. Run `wsl --shutdown` after changing it.
 </details>
+
+### Skills
+
+The plugin adds three skills. You don't need to call them by name: describe what you want, and the assistant loads the matching skill. To call one explicitly in Claude Code, type `/decoyduck:<skill-name>` (for example, `/decoyduck:decoyduck-import-api`).
+
+| Skill | Use it when you want to… |
+|---|---|
+| [`decoyduck-flows`](#decoyduck-flows) | Build, change, run, or debug a flow — or ask how DecoyDuck works |
+| [`decoyduck-import-api`](#decoyduck-import-api) | Turn an existing API definition into flows |
+| [`decoyduck-scenarios`](#decoyduck-scenarios) | Build a test that needs login, repetition, polling, or WebSocket checks |
+
+#### `decoyduck-flows`
+
+The base skill. It connects to the app, reads the node schema of your app version, and builds flows the way the app expects. The other two skills use it for their work.
+
+**What it does**
+
+1. Finds the project and canvas you have open in the app, so "this canvas" works.
+2. Builds the flow, then adds branches and loops.
+3. Checks the canvas for errors (broken edges, missing fields, undefined variables, circular flow calls) and fixes them.
+4. Runs the flow and checks each node's result and error logs — not just whether the flow finished.
+5. Selects the nodes it built or fixed in the app, so you can see them.
+
+It asks before deleting anything, and can back up the project before large edits. Questions about nodes, variables, templates, and built-in functions are answered from its reference files, so they work even when the app is closed.
+
+**Try asking**
+
+- *"Add a flow on this canvas that creates a user and then fetches it."*
+- *"Run the Checkout flow and tell me why it fails."*
+- *"What's the difference between a canvas variable and a global variable?"*
+
+#### `decoyduck-import-api`
+
+Converts an API definition into flows: one flow per request, and variables for shared values.
+
+| Supported source | Notes |
+|---|---|
+| OpenAPI / Swagger (JSON or YAML, file or URL) | Grouped by `tags`; auth from `securitySchemes` |
+| Postman collection (v2.x) | Grouped by folder; `{{var}}` and dynamic variables such as `{{$guid}}` are converted. Pre-request and test scripts are not converted. |
+| curl commands | Method, headers, body, basic auth, multipart, and `-k` are converted |
+| HAR file | Static assets (images, fonts, CSS, JS) are skipped |
+
+**What it does**
+
+1. Reads the source and groups the requests. With more than 20 requests, it shows the groups and asks which ones to import.
+2. Creates variables first: `baseUrl`, path parameters such as `id`, and empty `authToken` / `apiKey`. Real tokens or passwords found in the source go into variables, never into the flows, and it tells you which variables to fill in.
+3. Creates one flow per request (`GET /users/{id}`, …), with a message node that logs the response.
+4. If the API has a login endpoint, it offers to run the login flow before the others and pass the token to them.
+5. Checks the canvas, then **asks before running**, because the requests hit real servers.
+
+**Try asking**
+
+- *"Import `openapi.yaml` into a new canvas."*
+- *"Convert these curl commands into DecoyDuck flows."*
+- *"Make flows from my Postman collection, only the Orders folder."*
+
+#### `decoyduck-scenarios`
+
+Builds tests that need branching, repetition, waiting, or token reuse from ready-made patterns. It asks only for what it can't work out on its own, such as the URL, credentials, or response field names.
+
+| Pattern | What you get |
+|---|---|
+| Login, then authenticated requests | Login → save token → call APIs with a Bearer token, with a failure path for each request |
+| Shared setup flow | A login flow that runs automatically before every flow that needs the token |
+| Repeat N times | A counter loop with an optional random delay; built-in functions give each loop fresh test data |
+| Poll until ready | Call a status API until a condition is met, or stop after a maximum number of attempts |
+| WebSocket check | Connect → send → check the reply → disconnect, with failure paths |
+
+**Try asking**
+
+- *"Log in, then call `/orders` 50 times with a random delay."*
+- *"Poll `/jobs/${jobId}` every 2 seconds until status is `done`, give up after 10 tries."*
+- *"Connect to the WebSocket, subscribe, and check that the reply says `ok`."*
 
 ## How is it different from Postman?
 
